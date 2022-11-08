@@ -31,6 +31,9 @@ streams:
     - echo:bash /config/custom_components/expose_camera_stream_source/get_stream.sh camera.my_camera
 ```
 
+> **Note:** this requires the following PR to work, which is not yet merged at time of writing:
+> - https://github.com/AlexxIT/hassio-addons/pull/21
+
 The `get_stream.sh` script is included by this integration. You can use it to get the stream source URL for any camera in Home Assistant from inside of any add-on.
 
 You can then use the `my_camera` go2rtc stream in Frigate for object detection and/or recording:
