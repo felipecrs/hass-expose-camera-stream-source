@@ -1,10 +1,12 @@
-"""Tests for integration_blueprint api."""
+"""Tests for expose_camera_stream_source api."""
 import asyncio
 
 import aiohttp
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from custom_components.integration_blueprint.api import IntegrationBlueprintApiClient
+from custom_components.expose_camera_stream_source.api import (
+    IntegrationBlueprintApiClient,
+)
 
 
 async def test_api(hass, aioclient_mock, caplog):

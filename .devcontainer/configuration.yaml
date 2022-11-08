@@ -3,7 +3,10 @@ default_config:
 logger:
   default: info
   logs:
-    custom_components.integration_blueprint: debug
+    custom_components.expose_camera_stream_source: debug
 
-# If you need to debug uncomment the line below (doc: https://www.home-assistant.io/integrations/debugpy/)
-# debugpy:
+stream:
+
+debugpy:
+
+expose_camera_stream_source:
