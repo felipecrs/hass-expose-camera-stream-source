@@ -43,3 +43,5 @@ my_camera:
     inputs:
       - path: rtsp://192.168.1.10:8554/my_camera
 ```
+
+Where `192.168.1.10` is your Home Assistant internal IP address (which is where the go2rtc add-on listens on).
