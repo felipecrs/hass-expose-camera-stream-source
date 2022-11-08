@@ -24,11 +24,11 @@ This integration can be used to import Home Assistant cameras to [go2rtc](https:
 You need to be running go2rtc as add-on in Home Assistant. Here's an example of the configuration:
 
 ```yaml
-# go2rtc.yml
+# go2rtc.yaml
 
 streams:
   my_camera:
-    - /config/custom_components/expose_camera_stream_source/get_stream.sh camera.my_camera
+    - echo:bash /config/custom_components/expose_camera_stream_source/get_stream.sh camera.my_camera
 ```
 
 The `get_stream.sh` script is included by this integration. You can use it to get the stream source URL for any camera in Home Assistant from inside of any add-on.
