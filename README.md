@@ -19,7 +19,7 @@ Easiest install is via [HACS](https://hacs.xyz/):
 
 ## Importing Home Assistant cameras to go2rtc and/or Frigate
 
-This integration can be used to import Home Assistant cameras to [go2rtc](https://github.com/alexxit/go2rtc), including Tuya based cameras that are ONVIF compliant.
+This integration can be used to import Home Assistant cameras to [go2rtc](https://github.com/alexxit/go2rtc), including Tuya based cameras that are **not** ONVIF compliant.
 
 You need to be running go2rtc as add-on in Home Assistant. Here's an example of the configuration:
 
