@@ -1,3 +1,7 @@
+<p align="center">
+⭐<b>Please star this integration in GitHub if it helps you!</b>⭐
+</p>
+
 # Expose Camera Stream Source
 
 _Home Assistant integration to expose an API to retrieve the camera stream source URL._
