@@ -1,7 +1,8 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"context": ".."
 	},
 	"forwardPorts": [
 		8123
@@ -12,8 +13,6 @@
 			"onAutoForward": "notify"
 		}
 	},
-	"remoteUser": "vscode",
-	"postCreateCommand": "sudo container install",
 	"extensions": [
 		"ms-python.python",
 		"github.vscode-pull-request-github",

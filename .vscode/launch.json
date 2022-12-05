@@ -15,7 +15,6 @@
             "remoteRoot": "."
           }
         ],
-        "preLaunchTask": "Run Home Assistant on port 9123"
       },
       {
         // Example of attaching to my production server
