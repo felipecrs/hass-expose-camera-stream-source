@@ -78,6 +78,8 @@ entity_id="${1}"
 exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://192.168.1.10:8123/api/camera_stream_source/${entity_id}"
 ```
 
+Where `192.168.1.10` is your Home Assistant's IP address.
+
 Paste the content above in a file named `get_ha_stream.sh`. For this example, we will store the file at your home folder (`~/get_ha_stream.sh`). Then give it execution permission with the following command:
 
 ```console
@@ -154,10 +156,10 @@ set -eu
 HA_TOKEN="<put your long-lived access token here>"
 entity_id="${1}"
 
-exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://192.168.1.10:8123/api/camera_stream_source/${entity_id}"
+exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://127.0.0.1:8123/api/camera_stream_source/${entity_id}"
 ```
 
-Paste the content above in a file named `get_ha_stream.sh`, and place it in Home Assistant's `/config` folder. 
+Paste the content above in a file named `get_ha_stream.sh`, and place it in Home Assistant's `/config` folder. Do not forget to put your long-lived access token in the script's placeholder.
 
 Then, give it execution permission with the following command:
 
