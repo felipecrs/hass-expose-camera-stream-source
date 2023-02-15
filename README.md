@@ -27,9 +27,14 @@ Easiest install is via [HACS](https://hacs.xyz/):
 
 Now the integration should be active.
 
-## Importing cameras from Home Assistant to go2rtc and Frigate
+## Importing cameras from Home Assistant to go2rtc
 
 This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose an RTSP feed by default, like some Tuya and Nest cameras**.
+
+## When go2rtc is installed as an add-on
+
+<details>
+  <summary>Click here to show</summary>
 
 If you are running go2rtc as an add-on in Home Assistant, the process is a little simpler (if not, check [here](#when-go2rtc-is-running-via-docker)). Here's an example of the go2rtc configuration:
 
@@ -41,27 +46,26 @@ streams:
     - echo:bash /config/custom_components/expose_camera_stream_source/get_stream.sh camera.my_camera
 ```
 
+Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
+
 The `get_stream.sh` script is included by this integration. You can use it to get the stream source URL for any camera in Home Assistant from inside of any add-on.
 
-You can then use the `my_camera` go2rtc stream in Frigate for things like object detection and recording:
+Then, you can consume your go2rtc's `my_camera` stream in other applications like Frigate or other NVRs:
 
-```yaml
-# frigate.yml
-
-my_camera:
-  ffmpeg:
-    inputs:
-      - path: rtsp://192.168.1.10:8554/my_camera
-```
+- `rtsp://192.168.1.10:8554/my_camera`
 
 Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for add-on users it's the same IP as your Home Assistant).
 
-> **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate, to ensure everything is working up to this point.
+> **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate or other NVRs, to ensure everything is working up to this point.
+
+</details>
 
 ### When go2rtc is running via docker
 
-When go2rtc is not running as a Home Assistant add-on, you need to prepare a script and mount it to the go2rtc container. Here is
-how the script should look like:
+<details>
+  <summary>Click here to show</summary>
+
+When go2rtc is not running as a Home Assistant add-on, you need to prepare a script and mount it to the go2rtc container. Here is how the script should look like:
 
 ```bash
 #!/usr/bin/env bash
@@ -114,4 +118,69 @@ streams:
     - echo:/config/get_ha_stream.sh camera.my_camera
 ```
 
-The rest is just like the guide for the add-on.
+Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
+
+Then, you can consume your go2rtc's `my_camera` stream in other applications like Frigate or other NVRs:
+
+- `rtsp://192.168.1.10:8554/my_camera`
+
+Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for add-on users it's the same IP as your Home Assistant).
+
+> **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate or other NVRs, to ensure everything is working up to this point.
+
+### When go2rtc is running via the WebRTC integration
+
+<details>
+  <summary>Click here to show</summary>
+
+When go2rtc is not running as a Home Assistant add-on neither via an add-on, but as part of the WebRTC integration, you need to prepare a script in your `/config` folder.
+
+First, you will need a long-lived access token from Home Assistant. To generate one:
+
+1. Go to your Home Assistant profile page: [![Open your Home Assistant instance and show your Home Assistant user's profile.](https://my.home-assistant.io/badges/profile.svg)](https://my.home-assistant.io/redirect/profile/)
+2. Scroll down to _Long-Lived Access Token_, and click in _Create Token_.
+3. Give it a name, like `go2rtc` and press _Ok_.
+4. Copy your generated access token and save it. We will need it soon.
+
+Then, you can create the script. Here is how the script should look like:
+
+```bash
+#!/usr/bin/env bash
+
+set -eu
+
+HA_TOKEN="<put your long-lived access token here>"
+entity_id="${1}"
+
+exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://192.168.1.10:8123/api/camera_stream_source/${entity_id}"
+```
+
+Paste the content above in a file named `get_ha_stream.sh`, and place it in Home Assistant's `/config` folder. 
+
+Then, give it execution permission with the following command:
+
+```console
+chmod +x ~/get_ha_stream.sh
+```
+
+And here is an example of the go2rtc configuration:
+
+```yaml
+# go2rtc.yaml
+
+streams:
+  my_camera:
+    - echo:/config/get_ha_stream.sh camera.my_camera
+```
+
+Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
+
+Then, you can consume your go2rtc's `my_camera` stream in other applications like Frigate or other NVRs:
+
+- `rtsp://192.168.1.10:8554/my_camera`
+
+Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for add-on users it's the same IP as your Home Assistant).
+
+> **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate or other NVRs, to ensure everything is working up to this point.
+
+</details>
