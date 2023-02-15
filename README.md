@@ -128,6 +128,8 @@ Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for a
 
 > **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate or other NVRs, to ensure everything is working up to this point.
 
+</details>
+
 ### When go2rtc is running via the WebRTC integration
 
 <details>
