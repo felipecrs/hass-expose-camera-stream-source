@@ -8,7 +8,7 @@ USER vscode
 
 RUN container install
 
-# Currently failing due to gcc
-# RUN --mount=type=bind,source=requirements_dev.txt,target=/tmp/requirements_dev.txt \
-#     --mount=type=bind,source=requirements_test.txt,target=/tmp/requirements_test.txt \
-#     pip install -r /tmp/requirements_dev.txt -r /tmp/requirements_test.txt
+RUN pip install --upgrade pip
+
+RUN --mount=type=bind,source=requirements_dev.txt,target=/tmp/requirements_dev.txt \
+     pip install -r /tmp/requirements_dev.txt

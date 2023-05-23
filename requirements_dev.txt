@@ -1,1 +1,1 @@
-homeassistant
+pytest-homeassistant-custom-component==0.13.31
