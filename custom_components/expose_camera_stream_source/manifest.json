@@ -1,16 +1,12 @@
 {
   "domain": "expose_camera_stream_source",
   "name": "Expose Camera Stream Source",
-  "documentation": "https://github.com/felipecrs/expose_camera_stream_source",
-  "iot_class": "local_polling",
-  "integration_type": "service",
-  "issue_tracker": "https://github.com/felipecrs/expose_camera_stream_source/issues",
-  "version": "0.1.0",
+  "codeowners": ["@felipecrs"],
   "config_flow": false,
-  "codeowners": [
-    "@felipecrs"
-  ],
-  "dependencies": [
-    "camera"
-  ]
+  "dependencies": ["camera"],
+  "documentation": "https://github.com/felipecrs/hass-expose-camera-stream-source",
+  "integration_type": "service",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/felipecrs/hass-expose-camera-stream-source/issues",
+  "version": "0.1.0"
 }
