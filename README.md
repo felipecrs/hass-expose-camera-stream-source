@@ -39,14 +39,19 @@ Now the integration should be active.
 
 ## Importing cameras from Home Assistant to go2rtc and Frigate
 
-This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose an RTSP feed by default, like some Tuya and Nest cameras**.
+This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose a RTSP feed by default, like some Tuya and Nest cameras**.
 
-## When go2rtc is running within Frigate
+### When go2rtc is running within Frigate
 
-This is the case for Frigate 0.12.0 and above. If you are running go2rtc within the Frigate add-on, you can use the following configuration:
+This is the case for Frigate 0.12 and above.
+
+<details>
+  <summary>Click here to show</summary>
+
+If you are running go2rtc within the Frigate add-on, you can use the following configuration:
 
 ```yaml
-# /config/frigate.yml
+# /config/frigate.yaml
 
 go2rtc:
   streams:
@@ -67,7 +72,9 @@ Where `camera.my_camera` is the Home Assistant entity ID for the camera that you
 
 If you are running Frigate through docker, read [here](#when-go2rtc-is-running-via-docker) and make the necessary adaptations.
 
-## When go2rtc is installed as an add-on
+</details>
+
+### When go2rtc is installed as an add-on
 
 <details>
   <summary>Click here to show</summary>
@@ -75,7 +82,7 @@ If you are running Frigate through docker, read [here](#when-go2rtc-is-running-v
 If you are running go2rtc as an add-on in Home Assistant, the process is a little simpler (if not, check [here](#when-go2rtc-is-running-via-docker)). Here's an example of the go2rtc configuration:
 
 ```yaml
-# go2rtc.yaml
+# /config/go2rtc.yaml
 
 streams:
   my_camera:
