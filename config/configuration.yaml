@@ -1,0 +1,10 @@
+# https://www.home-assistant.io/integrations/default_config/
+default_config:
+
+# https://www.home-assistant.io/integrations/logger/
+logger:
+  default: info
+  logs:
+    custom_components.expose_camera_stream_source: debug
+
+expose_camera_stream_source:

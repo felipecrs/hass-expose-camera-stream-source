@@ -5,8 +5,10 @@ from http import HTTPStatus
 from unittest.mock import patch
 
 
-async def test_camera_stream_source_api(hass, mock_camera, hass_client):
+async def test_camera_stream_source_api(hass, hass_client):
     """Test camera stream source HTTP API."""
+
+    # TODO: fix AttributeError: 'NoneType' object has no attribute 'app'
 
     client = await hass_client()
 
