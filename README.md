@@ -8,7 +8,16 @@ _Home Assistant integration to expose an API to retrieve the camera stream sourc
 
 For example, it allows you to [import](#importing-cameras-from-home-assistant-to-go2rtc-and-frigate) Tuya, Nest and possibly other cameras to go2rtc and Frigate.
 
-Note, however, that this will only work if you are already able to view your camera stream in Home Assistant using [HLS](https://www.home-assistant.io/integrations/stream/). For cameras that exclusively only work via WebRTC (through the [RTSPToWebRTC Home Assistant integration](https://www.home-assistant.io/integrations/rtsp_to_webrtc/)), this method will not help. It is the case for [some specific Nest and Tuya cameras](https://github.com/felipecrs/hass-expose-camera-stream-source/issues/5), for example. If that is your case, I suggest you create an [issue in go2rtc](https://github.com/AlexxIT/go2rtc/issues) as it is possible that go2rtc can be improved to support importing your camera stream directly, without a intermediary project like this.
+Note, however, that **this integration will only work if you are already able to view your camera stream in Home Assistant using [HLS](https://www.home-assistant.io/integrations/stream/)**.
+
+**For cameras that exclusively only work via WebRTC** (through the [RTSPToWebRTC Home Assistant integration](https://www.home-assistant.io/integrations/rtsp_to_webrtc/)), this method will not help. It is the case for [some specific Nest and Tuya cameras](https://github.com/felipecrs/hass-expose-camera-stream-source/issues/5), for example.
+
+If that is your case:
+
+- Nest WebRTC-native cameras are supported natively in go2rtc, see [here](https://github.com/AlexxIT/go2rtc?tab=readme-ov-file#source-hass) for more details.
+- Tuya WebRTC-native cameras are not supported either by Home Assistant or go2rtc. If you need it, you can express your need in:
+  - https://github.com/home-assistant/core/issues/68503
+  - https://github.com/AlexxIT/go2rtc/issues/315
 
 ## Installation
 
@@ -20,14 +29,15 @@ Easiest install is via [HACS](https://hacs.xyz/):
 2. Restart Home Assistant.
 3. Add the following to your `configuration.yaml` file:
 
-    ```yaml
-    expose_camera_stream_source:
-    ```
+   ```yaml
+   expose_camera_stream_source:
+   ```
+
 4. Restart Home Assistant again.
 
 Now the integration should be active.
 
-## Importing cameras from Home Assistant to go2rtc
+## Importing cameras from Home Assistant to go2rtc and Frigate
 
 This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose an RTSP feed by default, like some Tuya and Nest cameras**.
 
