@@ -41,6 +41,32 @@ Now the integration should be active.
 
 This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose an RTSP feed by default, like some Tuya and Nest cameras**.
 
+## When go2rtc is running within Frigate
+
+This is the case for Frigate 0.12.0 and above. If you are running go2rtc within the Frigate add-on, you can use the following configuration:
+
+```yaml
+# /config/frigate.yml
+
+go2rtc:
+  streams:
+    my_camera:
+      - echo:bash /config/custom_components/expose_camera_stream_source/get_stream.sh camera.my_camera
+
+cameras:
+  my_camera:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/my_camera?video
+          input_args: preset-rtsp-restream-low-latency
+          roles:
+            - detect
+```
+
+Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
+
+If you are running Frigate through docker, read [here](#when-go2rtc-is-running-via-docker) and make the necessary adaptations.
+
 ## When go2rtc is installed as an add-on
 
 <details>
