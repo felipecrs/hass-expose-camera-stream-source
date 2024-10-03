@@ -231,3 +231,31 @@ Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for a
 > **Tip:** Try to first play the RTSP link above in VLC before adding to Frigate or other NVRs, to ensure everything is working up to this point.
 
 </details>
+
+## Bonus: importing Tuya cameras to go2rtc without Home Assistant
+
+This repository also provides a script that is able to operate without Home Assistant, allowing you to import Tuya cameras to go2rtc without the need of Home Assistant.
+
+It also allows you to select between _RTSP_ and _HLS_ streams, which is not possible with the Home Assistant integration (which is always _RTSP_).
+
+Script: [get_tuya_stream_url.py](./custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py)
+
+Usage: `Usage: python get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]`
+
+Example:
+
+```console
+$ python get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
+rtsps://ebf0345643b3de54904xgqs:OIB97AMHY7LG8TW6@aws-tractor2.tuyaus.com:443/v1/proxy/echo_show/d91271489ccd46331be3e4f3fa65b5a8893c0799bef1485ba
+
+$ python get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com HLS
+https://aws-tractor2.tuyaus.com:8033/hls/348ceb3cbe1c4429b849c546c924af9bb5f053cd858ae65e0e3bf.m3u8
+```
+
+And it can be integrated with go2rtc in the same way as the Home Assistant integration:
+
+```yaml
+streams:
+  my_camera:
+    - echo:python /config/custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
+```
