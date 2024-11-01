@@ -240,15 +240,15 @@ It also allows you to select between _RTSP_ and _HLS_ streams, which is not poss
 
 Script: [get_tuya_stream_url.py](./custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py)
 
-Usage: `Usage: python get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]`
+Usage: `Usage: python3 get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]`
 
 Example:
 
 ```console
-$ python get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
+$ python3 get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
 rtsps://ebf0345643b3de54904xgqs:OIB97AMHY7LG8TW6@aws-tractor2.tuyaus.com:443/v1/proxy/echo_show/d91271489ccd46331be3e4f3fa65b5a8893c0799bef1485ba
 
-$ python get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com HLS
+$ python3 get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com HLS
 https://aws-tractor2.tuyaus.com:8033/hls/348ceb3cbe1c4429b849c546c924af9bb5f053cd858ae65e0e3bf.m3u8
 ```
 
@@ -257,5 +257,5 @@ And it can be integrated with go2rtc in the same way as the Home Assistant integ
 ```yaml
 streams:
   my_camera:
-    - echo:python /config/custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
+    - echo:python3 /config/custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
 ```

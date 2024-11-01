@@ -61,7 +61,7 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
 
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        print("Usage: python get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]")
+        print("Usage: python3 get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]")
         sys.exit(1)
 
     device_id = sys.argv[1]
