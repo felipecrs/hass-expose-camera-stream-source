@@ -41,9 +41,7 @@ Now the integration should be active.
 
 This integration can be used to import cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) and [Frigate](https://github.com/blakeblackshear/frigate), **including cameras which does not expose a RTSP feed by default, like some Tuya and Nest cameras**.
 
-### When go2rtc is running within Frigate
-
-This is the case for Frigate 0.12 and above.
+### When go2rtc is running within the Frigate add-on
 
 <details>
   <summary>Click here to show</summary>
@@ -70,7 +68,76 @@ cameras:
 
 Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
 
-If you are running Frigate through docker, read [here](#when-go2rtc-is-running-via-docker) and make the necessary adaptations.
+</details>
+
+### When go2rtc is running within Frigate via docker
+
+<details>
+  <summary>Click here to show</summary>
+
+When go2rtc is running within Frigate via docker, you need to prepare a Bash script to mount it to the Frigate container. Here is how the script should look like:
+
+```bash
+#!/usr/bin/env bash
+
+set -eu
+
+HA_TOKEN="${HA_TOKEN:?"HA_TOKEN is not set, make sure to have this environment variable set with your Home Assisant long-lived token."}"
+entity_id="${1}"
+
+exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://192.168.1.10:8123/api/camera_stream_source/${entity_id}"
+```
+
+Where `192.168.1.10` is your Home Assistant's IP address.
+
+Paste the content above in a file named `get_ha_stream.sh`, and place it in your Frigate's `config` directory, beside your `frigate.yaml`. Then, give it execution permission with the following command:
+
+```console
+chmod +x /path/to/your/config/get_ha_stream.sh
+```
+
+You will also need a long-lived access token from Home Assistant. To generate one:
+
+1. Go to your Home Assistant profile page: [![Open your Home Assistant instance and show your Home Assistant user's profile.](https://my.home-assistant.io/badges/profile.svg)](https://my.home-assistant.io/redirect/profile/)
+2. Scroll down to _Long-Lived Access Token_, and click in _Create Token_.
+3. Give it a name, like `go2rtc` and press _Ok_.
+4. Copy your generated access token and save it. We will need it soon.
+
+Now, you need to make sure your token is added as the `HA_TOKEN` environment variable. If you use Docker Compose, you just need to add something like the below in your configuration:
+
+```diff
+# docker-compose.yaml
+
+services:
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:stable
+    volumes:
+      - /path/to/your/config:/config
++   environment:
++     HA_TOKEN: paste-your-long-lived-access-token-here
+```
+
+And here is an example of the Frigate configuration:
+
+```yaml
+# frigate.yaml
+
+go2rtc:
+  streams:
+    my_camera:
+      - echo:/config/get_ha_stream.sh camera.my_camera
+
+cameras:
+  my_camera:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/my_camera?video
+          input_args: preset-rtsp-restream-low-latency
+          roles:
+            - detect
+```
+
+Where `camera.my_camera` is the Home Assistant entity ID for the camera that you want to import the stream from.
 
 </details>
 
@@ -108,7 +175,7 @@ Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for a
 <details>
   <summary>Click here to show</summary>
 
-When go2rtc is not running as a Home Assistant add-on, you need to prepare a script and mount it to the go2rtc container. Here is how the script should look like:
+When go2rtc is not running as a Home Assistant add-on, you need to prepare a Bash script and mount it to the go2rtc container. Here is how the script should look like:
 
 ```bash
 #!/usr/bin/env bash
@@ -123,10 +190,10 @@ exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://192.168.1.10:8123
 
 Where `192.168.1.10` is your Home Assistant's IP address.
 
-Paste the content above in a file named `get_ha_stream.sh`. For this example, we will store the file at your home folder (`~/get_ha_stream.sh`). Then give it execution permission with the following command:
+Paste the content above in a file named `get_ha_stream.sh`, and place it beside your `go2rtc.yaml`. Then, give it execution permission with the following command:
 
 ```console
-chmod +x ~/get_ha_stream.sh
+chmod +x /path/to/your/get_ha_stream.sh
 ```
 
 You will also need a long-lived access token from Home Assistant. To generate one:
@@ -147,10 +214,10 @@ services:
     network_mode: host
     restart: always
     volumes:
-      - "~/go2rtc.yaml:/config/go2rtc.yaml"
-+     - "~/get_ha_stream.sh:/config/get_ha_stream.sh"
+      - /path/to/your/go2rtc.yaml:/config/go2rtc.yaml
++     - /path/to/your/get_ha_stream.sh:/config/get_ha_stream.sh
 +   environment:
-+     HA_TOKEN: paste-your-token-here
++     HA_TOKEN: paste-your-long-lived-access-token-here
 ```
 
 And here is an example of the go2rtc configuration:
@@ -180,7 +247,7 @@ Where `192.168.1.10` is the IP which you can access the go2rtc interfaces (for a
 <details>
   <summary>Click here to show</summary>
 
-When go2rtc is not running as a Home Assistant add-on neither via an add-on, but as part of the WebRTC integration, you need to prepare a script in your `/config` folder.
+When go2rtc is not running as a Home Assistant add-on neither via an add-on, but as part of the WebRTC integration, you need to prepare a Bash script in your `/config` directory.
 
 First, you will need a long-lived access token from Home Assistant. To generate one:
 
@@ -202,12 +269,12 @@ entity_id="${1}"
 exec curl -fsSL -H "Authorization: Bearer ${HA_TOKEN}" "http://127.0.0.1:8123/api/camera_stream_source/${entity_id}"
 ```
 
-Paste the content above in a file named `get_ha_stream.sh`, and place it in Home Assistant's `/config` folder. Do not forget to put your long-lived access token in the script's placeholder.
+Paste the content above in a file named `get_ha_stream.sh`, and place it in Home Assistant's `/config` directory. Do not forget to put your long-lived access token in the script's placeholder.
 
 Then, give it execution permission with the following command:
 
 ```console
-chmod +x ~/get_ha_stream.sh
+chmod +x /config/get_ha_stream.sh
 ```
 
 And here is an example of the go2rtc configuration:
@@ -255,7 +322,9 @@ https://aws-tractor2.tuyaus.com:8033/hls/348ceb3cbe1c4429b849c546c924af9bb5f053c
 And it can be integrated with go2rtc in the same way as the Home Assistant integration:
 
 ```yaml
+# go2rtc.yaml
+
 streams:
   my_camera:
-    - echo:python3 /config/custom_components/expose_camera_stream_source/scripts/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
+    - echo:python3 /path/to/your/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
 ```
