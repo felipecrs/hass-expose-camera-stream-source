@@ -48,6 +48,9 @@ This integration can be used to import cameras from Home Assistant to [go2rtc](h
 
 If you are running go2rtc within the Frigate add-on, you can use the following configuration:
 
+> [!IMPORTANT]
+> If using Frigate 0.16 Beta or newer, change the paths below from `/config/` to `/homeassistant/`.
+
 ```yaml
 # /config/frigate.yaml
 
