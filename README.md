@@ -14,10 +14,10 @@ Note, however, that **this integration will only work if you are already able to
 
 If that is your case:
 
-- Nest WebRTC-native cameras are supported natively in go2rtc, see [here](https://github.com/AlexxIT/go2rtc?tab=readme-ov-file#source-hass) for more details.
-- Tuya WebRTC-native cameras are not supported either by Home Assistant or go2rtc. If you need it, you can express your need in:
-  - https://github.com/home-assistant/core/issues/68503
-  - https://github.com/AlexxIT/go2rtc/issues/315
+- Nest WebRTC-native cameras are supported natively in go2rtc, see [here](https://github.com/AlexxIT/go2rtc?tab=readme-ov-file#source-nest) for more details.
+- Tuya WebRTC-native cameras are not supported either by Home Assistant or go2rtc. If you need it, you can express your interest in:
+  - https://github.com/AlexxIT/go2rtc/issues/315 (being worked on by @seydx, but you can [try it already](https://github.com/AlexxIT/go2rtc/issues/315#issuecomment-2905955963))
+- Cameras that only support still images can be added to go2rtc through [this method](https://github.com/felipecrs/hass-expose-camera-stream-source/issues/53).
 
 ## Installation
 
