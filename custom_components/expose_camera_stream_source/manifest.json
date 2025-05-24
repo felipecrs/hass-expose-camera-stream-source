@@ -8,5 +8,5 @@
   "integration_type": "service",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/felipecrs/hass-expose-camera-stream-source/issues",
-  "version": "0.2.1"
+  "version": "0.2.2"
 }
