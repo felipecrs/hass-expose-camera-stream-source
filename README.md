@@ -4,9 +4,9 @@
 
 # Expose Camera Stream Source
 
-_Home Assistant integration to expose an API to retrieve the camera stream source URL._
+_A Home Assistant integration to expose an API for retrieving the camera stream source URL._
 
-For example, it allows you to [import](#importing-cameras-from-home-assistant-to-go2rtc-or-frigate) Tuya, Nest and possibly other cameras to [go2rtc](https://github.com/alexxit/go2rtc) or [Frigate](https://github.com/blakeblackshear/frigate).
+It allows to [import](#importing-cameras-from-home-assistant-to-go2rtc-or-frigate) Tuya, Nest and possibly other cameras from Home Assistant to [go2rtc](https://github.com/alexxit/go2rtc) or [Frigate](https://github.com/blakeblackshear/frigate).
 
 Note, however, that **this integration will only work if you are already able to view your camera stream in Home Assistant through [HLS](https://www.home-assistant.io/integrations/stream/)**.
 
