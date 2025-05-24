@@ -111,6 +111,12 @@ streams:
 
 ## Bonus: importing Tuya cameras to go2rtc without Home Assistant
 
+> [!NOTE]
+> This is obsolete since native support for Tuya cameras in go2rtc is being worked on by @seydx, and you can [try it already](https://github.com/AlexxIT/go2rtc/issues/315#issuecomment-2905955963).
+
+<details>
+<summary>Click to here to show anyway</summary>
+
 This repository also provides a script that is able to operate without Home Assistant, allowing you to import Tuya cameras to go2rtc without the need of Home Assistant.
 
 It also allows you to select between _RTSP_ and _HLS_ streams, which is not possible with the Home Assistant integration (which is always _RTSP_).
@@ -138,3 +144,5 @@ streams:
   my_camera:
     - echo:python3 /path/to/your/get_tuya_stream_url.py <device id> <client id> <client secret> https://openapi.tuyaus.com RTSP
 ```
+
+</details>
