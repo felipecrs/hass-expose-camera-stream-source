@@ -1,5 +1,4 @@
 import logging
-from typing import Final
 from homeassistant.components.camera import Camera, CameraView
 from homeassistant.components.camera.const import DOMAIN as CAMERA_DOMAIN
 from homeassistant.core import HomeAssistant

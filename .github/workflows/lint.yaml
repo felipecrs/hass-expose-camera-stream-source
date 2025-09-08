@@ -1,0 +1,23 @@
+name: lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - uses: astral-sh/setup-uv@v6
+      - run: uv venv
+      - run: uv pip install -r requirements.txt
+      - run: uvx ruff check .
+      - run: uvx ruff format . --check
