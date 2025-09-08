@@ -7,14 +7,23 @@ import hashlib
 import http.client
 import json
 
-def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stream_type="RTSP"):
-    encoded_empty_body = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+def get_tuya_stream_url(
+    device_id, client_id, client_secret, tuya_base_url, stream_type="RTSP"
+):
+    encoded_empty_body = (
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    )
     t = str(int(time.time() * 1000))
 
     # Generate sign for token request
     path = "/v1.0/token?grant_type=1"
     sign_string = f"{client_id}{t}GET\n{encoded_empty_body}\n\n{path}"
-    sign = hmac.new(client_secret.encode(), sign_string.encode(), hashlib.sha256).hexdigest().upper()
+    sign = (
+        hmac.new(client_secret.encode(), sign_string.encode(), hashlib.sha256)
+        .hexdigest()
+        .upper()
+    )
 
     # Request token
     headers = {
@@ -24,7 +33,7 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
         "mode": "cors",
         "Content-Type": "application/json",
         "sign": sign,
-        "access_token": ""
+        "access_token": "",
     }
 
     conn = http.client.HTTPSConnection(tuya_base_url.replace("https://", ""))
@@ -35,7 +44,9 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
     response_data = response.read()
     response_json = json.loads(response_data)
     if not response_json["success"]:
-        raise Exception(f"Failed to get token: {response_json.get('msg', response_data)}")
+        raise Exception(
+            f"Failed to get token: {response_json.get('msg', response_data)}"
+        )
     access_token = response_json["result"]["access_token"]
 
     # Generate sign for stream URL request
@@ -44,7 +55,11 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
     encoded_body = hashlib.sha256(body.encode()).hexdigest()
     method = "POST"
     sign_string = f"{client_id}{access_token}{t}{method}\n{encoded_body}\n\n{path}"
-    sign = hmac.new(client_secret.encode(), sign_string.encode(), hashlib.sha256).hexdigest().upper()
+    sign = (
+        hmac.new(client_secret.encode(), sign_string.encode(), hashlib.sha256)
+        .hexdigest()
+        .upper()
+    )
 
     # Request stream URL
     headers["access_token"] = access_token
@@ -52,7 +67,9 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
     conn.request("POST", path, body=body, headers=headers)
     response = conn.getresponse()
     if response.status != 200:
-        raise Exception(f"Failed to get stream URL: {response.status} {response.reason}")
+        raise Exception(
+            f"Failed to get stream URL: {response.status} {response.reason}"
+        )
     response_data = response.read()
     response_json = json.loads(response_data)
     if not response_json["success"]:
@@ -61,9 +78,12 @@ def get_tuya_stream_url(device_id, client_id, client_secret, tuya_base_url, stre
 
     print(url)
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        print("Usage: python3 get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]")
+        print(
+            "Usage: python3 get_tuya_stream_url.py <device id> <client id> <client secret> <tuya api base url> [stream type]"
+        )
         sys.exit(1)
 
     device_id = sys.argv[1]
