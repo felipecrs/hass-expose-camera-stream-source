@@ -22,17 +22,14 @@ Here are some alternatives:
 
 Easiest install is via [HACS](https://hacs.xyz/):
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=felipecrs&repository=hass-expose-camera-stream-source&category=integration)
+1. Click the button below to install this integration via HACS:
 
-1. Click the button above, and install this integration via HACS. Do **not** try to configure it yet.
+   [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=felipecrs&repository=hass-expose-camera-stream-source&category=integration)
+
 2. Restart Home Assistant.
-3. Add the following to your `configuration.yaml` file:
+3. Click the button below to setup the integration:
 
-   ```yaml
-   expose_camera_stream_source:
-   ```
-
-4. Restart Home Assistant again.
+   [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=expose_camera_stream_source)
 
 Now the integration should be active.
 
@@ -48,15 +45,15 @@ This integration can be used to import cameras from Home Assistant to [go2rtc](h
 > ```
 >
 > **Replacing** `camera.my_camera` with your camera entity ID.
-> 
+>
 > If you have **no access to add-ons**, you will need to replace `${SUPERVISOR_TOKEN}` with your Home Assistant long-lived access token and `http://supervisor/core` with the IP address or URL of your Home Assistant. Read below for more details. If you are on Windows, you can run that command in PowerShell by changing `curl` to `curl.exe`.
 >
 > After running it, it should output an RTSP or HTTP URL.
 >
 > **If it did not**, sorry but stream source is not available for your camera.
-> 
+>
 > **If it did, copy this URL and try to play it in [VLC](https://www.videolan.org/vlc/)**.
-> 
+>
 > Be quick though, some URLs expire after a few seconds if no connection is made. You can generate a new one by running the command again.
 >
 > **If it does not play in VLC**, it will not play in go2rtc or Frigate either. Sorry.
