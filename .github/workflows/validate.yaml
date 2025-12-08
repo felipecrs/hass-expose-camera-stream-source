@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v6
 
       # https://github.com/home-assistant/actions/commits/master/hassfest
-      - uses: home-assistant/actions/hassfest@6778c32c6da322382854bd824e30fd4a4f3c20e5
+      - uses: home-assistant/actions/hassfest@87c064c607f3c5cc673a24258d0c98d23033bfc3
 
       # https://github.com/hacs/action/commits/main
       - uses: hacs/action@06827d281b9c558c46d8ed6f4aae6c517fdc19ed
