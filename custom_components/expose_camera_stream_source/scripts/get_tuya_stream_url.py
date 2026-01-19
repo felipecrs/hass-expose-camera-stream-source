@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# This script is obsolete, but is kept for compatibility reasons.
+
 import sys
 import time
 import hmac
